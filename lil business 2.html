@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liel Business Studio | By Order of the Peaky Blinders</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        vintage: {
+                            dark: '#0a0908',
+                            card: '#141210',
+                            charcoal: '#1c1a17',
+                            gold: '#d4af37',
+                            goldlight: '#f3e5ab',
+                            goldhover: '#b89728',
+                            sepia: '#2b241b',
+                            crimson: '#8a1c14'
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                        special: ['Special Elite', 'cursive'],
+                        inter: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #0a0908;
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-special { font-family: 'Special Elite', cursive; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0908;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b89728;
+        }
+
+        /* Vintage grain & vignette overlay */
+        .vignette {
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+        }
+
+        /* Smoke / Cinematic Animation */
+        @keyframes pulse-gold {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.05); }
+        }
+        .animate-pulse-gold {
+            animation: pulse-gold 8s infinite ease-in-out;
+        }
+
+        /* Marquee animation */
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 35s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-vintage-dark text-gray-200 selection:bg-vintage-gold selection:text-black">
+
+    <!-- Cinematic Intro Overlay -->
+    <div id="intro-overlay" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="text-center px-4">
+            <p class="font-special text-vintage-gold text-lg md:text-xl tracking-widest uppercase mb-4 animate-pulse">Birmingham Syndicate Archive</p>
+            <h1 class="font-cinzel text-4xl md:text-7xl font-black text-white tracking-wider mb-6 drop-shadow-[0_5px_15px_rgba(212,175,55,0.4)]">LIEL BUSINESS STUDIO</h1>
+            <div class="w-32 h-1 bg-vintage-gold mx-auto mb-6"></div>
+            <p class="font-playfair italic text-gray-400 text-lg md:text-2xl max-w-2xl mx-auto mb-8">"By Order of the Peaky Blinders, legitimate enterprise meets unmatched empire."</p>
+            <button onclick="enterStudio()" class="font-cinzel px-8 py-3 bg-vintage-gold text-black font-bold text-lg rounded border border-vintage-goldhover hover:bg-transparent hover:text-vintage-gold transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)] tracking-wider">
+                ENTER THE BOARDROOM
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Running Text / Marquee -->
+    <div class="bg-vintage-card border-y border-vintage-gold/30 py-3 overflow-hidden whitespace-nowrap relative z-40">
+        <div class="animate-marquee flex items-center space-x-12 font-special text-vintage-gold text-sm md:text-base tracking-widest">
+            <span><i class="fas fa-crown text-vintage-gold mr-2"></i> BY ORDER OF LIEL BUSINESS STUDIO</span>
+            <span><i class="fas fa-shield-alt text-vintage-gold mr-2"></i> 50 ELITE BUSINESS SYNDICATES & PROJECTS ACTIVE</span>
+            <span><i class="fas fa-map-marker-alt text-vintage-gold mr-2"></i> BIRMINGHAM & GLOBAL HEADQUARTERS</span>
+            <span><i class="fas fa-gavel text-vintage-gold mr-2"></i> NO F***ING FIGHTING DURING BUSINESS HOURS</span>
+            <span><i class="fas fa-crown text-vintage-gold mr-2"></i> BY ORDER OF LIEL BUSINESS STUDIO</span>
+            <span><i class="fas fa-shield-alt text-vintage-gold mr-2"></i> 50 ELITE BUSINESS SYNDICATES & PROJECTS ACTIVE</span>
+            <span><i class="fas fa-map-marker-alt text-vintage-gold mr-2"></i> BIRMINGHAM & GLOBAL HEADQUARTERS</span>
+            <span><i class="fas fa-gavel text-vintage-gold mr-2"></i> NO F***ING FIGHTING DURING BUSINESS HOURS</span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-vintage-dark/95 backdrop-blur-md border-b border-vintage-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full border-2 border-vintage-gold flex items-center justify-center bg-vintage-charcoal text-vintage-gold font-cinzel font-bold text-xl">
+                    L
+                </div>
+                <div>
+                    <span class="font-cinzel text-lg md:text-xl font-bold tracking-wider text-white">LIEL STUDIO</span>
+                    <span class="block font-special text-xs text-vintage-gold tracking-widest">EST. 1919 BIRMINGHAM</span>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-8 font-cinzel text-sm tracking-widest">
+                <a href="#hero" class="text-vintage-gold hover:text-white transition-colors">Beranda</a>
+                <a href="#boss-profile" class="text-gray-300 hover:text-vintage-gold transition-colors">Boss Jhon</a>
+                <a href="#projects" class="text-gray-300 hover:text-vintage-gold transition-colors">50 Syndicates</a>
+                <a href="#testimonials" class="text-gray-300 hover:text-vintage-gold transition-colors">Testimoni</a>
+                <a href="#contact" class="text-gray-300 hover:text-vintage-gold transition-colors">Kontrak Bisnis</a>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="openBossModal()" class="hidden sm:inline-flex items-center px-4 py-2 bg-vintage-charcoal border border-vintage-gold/50 text-vintage-gold font-cinzel text-xs tracking-wider rounded hover:bg-vintage-gold hover:text-black transition-all">
+                    <i class="fas fa-laptop-code mr-2"></i> Live Boss Status
+                </button>
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden text-vintage-gold focus:outline-none text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-vintage-card border-b border-vintage-gold/20 px-4 pt-2 pb-6 space-y-3 font-cinzel text-sm">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block text-vintage-gold py-2">Beranda</a>
+            <a href="#boss-profile" onclick="toggleMobileMenu()" class="block text-gray-300 py-2">Boss Jhon liel</a>
+            <a href="#projects" onclick="toggleMobileMenu()" class="block text-gray-300 py-2">50 Syndicates</a>
+            <a href="#testimonials" onclick="toggleMobileMenu()" class="block text-gray-300 py-2">Testimoni</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block text-gray-300 py-2">Kontrak Bisnis</a>
+            <button onclick="openBossModal(); toggleMobileMenu();" class="w-full text-center px-4 py-2 bg-vintage-gold text-black font-bold rounded">
+                Live Boss Status
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-20 px-4">
+        <!-- Background Image with Noir Overlay -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlsHAEtQro1Cnwk7hrDTdtFly7hFlsHj48oFoYXpXTDg&s=10" alt="Peaky Blinders Atmosphere" class="w-full h-full object-cover filter brightness-[0.25] contrast-125 sepia-[0.3]">
+            <div class="absolute inset-0 bg-gradient-to-t from-vintage-dark via-vintage-dark/60 to-transparent"></div>
+            <!-- Ambient lighting glow -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-vintage-gold/10 rounded-full blur-[120px] pointer-events-none animate-pulse-gold"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto text-center">
+            <div class="inline-block border border-vintage-gold/40 bg-vintage-charcoal/80 px-4 py-1.5 rounded-full mb-6 backdrop-blur-sm">
+                <span class="font-special text-vintage-gold text-xs md:text-sm tracking-widest"><i class="fas fa-crown text-vintage-gold mr-2"></i> THE ULTIMATE 1920s BUSINESS SYNDICATE</span>
+            </div>
+            
+            <h1 class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-wider mb-6 leading-tight">
+                BY ORDER OF <span class="text-vintage-gold drop-shadow-[0_2px_10px_rgba(212,175,55,0.5)]">LIEL STUDIO</span>
+            </h1>
+
+            <p class="font-playfair italic text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+                "Kami tidak sekadar berbisnis. Kami membangun imperium ekonomi dari jalanan Birmingham hingga singgasana global dengan perhitungan mutlak."
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#projects" class="w-full sm:w-auto font-cinzel px-8 py-4 bg-vintage-gold text-black font-bold rounded shadow-[0_4px_20px_rgba(212,175,55,0.4)] hover:bg-vintage-goldlight transition-all tracking-wider flex items-center justify-center">
+                    <i class="fas fa-folder-open mr-2"></i> Jelajahi 50 Proyek
+                </a>
+                <a href="#boss-profile" class="w-full sm:w-auto font-cinzel px-8 py-4 bg-vintage-charcoal border border-vintage-gold/60 text-vintage-gold font-bold rounded hover:bg-vintage-gold hover:text-black transition-all tracking-wider flex items-center justify-center">
+                    <i class="fas fa-user-tie mr-2"></i> Temui Boss Jhon liel
+                </a>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-12 border-t border-vintage-gold/20 max-w-4xl mx-auto">
+                <div class="bg-vintage-card/60 backdrop-blur-md p-4 rounded border border-vintage-gold/20">
+                    <div class="font-cinzel text-3xl md:text-4xl font-bold text-vintage-gold">50</div>
+                    <div class="font-special text-xs text-gray-400 mt-1 uppercase">Elite Syndicates</div>
+                </div>
+                <div class="bg-vintage-card/60 backdrop-blur-md p-4 rounded border border-vintage-gold/20">
+                    <div class="font-cinzel text-3xl md:text-4xl font-bold text-vintage-gold">100%</div>
+                    <div class="font-special text-xs text-gray-400 mt-1 uppercase">Control & Success</div>
+                </div>
+                <div class="bg-vintage-card/60 backdrop-blur-md p-4 rounded border border-vintage-gold/20">
+                    <div class="font-cinzel text-3xl md:text-4xl font-bold text-vintage-gold">1920</div>
+                    <div class="font-special text-xs text-gray-400 mt-1 uppercase">Vintage Standards</div>
+                </div>
+                <div class="bg-vintage-card/60 backdrop-blur-md p-4 rounded border border-vintage-gold/20">
+                    <div class="font-cinzel text-3xl md:text-4xl font-bold text-vintage-gold">Zero</div>
+                    <div class="font-special text-xs text-gray-400 mt-1 uppercase">Toleransi Kegagalan</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Boss Jhon Profile Section -->
+    <section id="boss-profile" class="py-24 bg-vintage-charcoal/50 border-y border-vintage-gold/20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="font-special text-vintage-gold text-sm tracking-widest uppercase">Supreme Commander & Strategist</span>
+                <h2 class="font-cinzel text-3xl md:text-5xl font-black text-white mt-2">PROFIL BOSS JHON LIEL</h2>
+                <div class="w-24 h-1 bg-vintage-gold mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Boss Avatar / Photo with Vintage Border -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-vintage-gold to-vintage-crimson rounded-lg blur opacity-40"></div>
+                        <div class="relative bg-vintage-card p-4 rounded-lg border-2 border-vintage-gold shadow-2xl">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRawUyUI0uT7-RdRumFOIg5jB47qjDKl8_OQbFj0Wn6JQ&s=10" alt="Boss Jhon" class="w-full h-[450px] object-cover rounded filter contrast-125 sepia-[0.2]">
+                            <div class="absolute bottom-6 left-6 right-6 bg-vintage-dark/90 backdrop-blur-md p-4 rounded border border-vintage-gold/50">
+                                <h3 class="font-cinzel text-xl font-bold text-white">Jhon Shelby-Uliel</h3>
+                                <p class="font-special text-xs text-vintage-gold">Chief Executive Boss & Founder</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boss Details & Live Status Widget -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-vintage-card p-6 md:p-8 rounded-lg border border-vintage-gold/30 shadow-xl">
+                        <h3 class="font-cinzel text-2xl font-bold text-vintage-gold mb-4 flex items-center justify-between">
+                            <span>Biografi Sang Pimpinan</span>
+                            <span class="text-xs font-special bg-vintage-gold/10 text-vintage-gold px-3 py-1 rounded border border-vintage-gold/30">Verified Boss</span>
+                        </h3>
+                        <p class="font-playfair text-gray-300 text-lg leading-relaxed mb-6">
+                            "Lahir di gang-gang berasap Birmingham, Boss Jhon lil memimpin Liel Business Studio dengan visi baja. Menggabungkan kode kehormatan lama tahun 1920 dengan strategi finansial modern, setiap proyek dikendalikan secara presisi, tanpa kompromi, dan selalu menghasilkan dominasi pasar mutlak."
+                        </p>
+
+                        <!-- Live Status Dashboard Widget (Editable / Real-time simulation) -->
+                        <div class="bg-vintage-dark p-5 rounded border border-vintage-gold/20 space-y-4">
+                            <div class="flex items-center justify-between border-b border-vintage-gold/10 pb-3">
+                                <span class="font-cinzel text-sm text-gray-400"><i class="fas fa-satellite-dish text-vintage-gold mr-2"></i> Status Live:</span>
+                                <span class="inline-flex items-center text-xs font-special text-green-400 bg-green-950/50 px-2.5 py-1 rounded border border-green-500/30">
+                                    <span class="w-2 h-2 bg-green-500 rounded-full animate-ping mr-2"></span> Aktif & Mengawasi Operasi
+                                </span>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-vintage-charcoal p-3.5 rounded border border-vintage-gold/10">
+                                    <div class="text-xs font-special text-vintage-gold uppercase mb-1"><i class="fas fa-home mr-1"></i> Lokasi Tempat Tinggal</div>
+                                    <div id="boss-location-display" class="font-cinzel text-sm font-semibold text-white">the islamic boarding school daar el qolam .Gintung(Upgraded)</div>
+                                </div>
+                                <div class="bg-vintage-charcoal p-3.5 rounded border border-vintage-gold/10">
+                                    <div class="text-xs font-special text-vintage-gold uppercase mb-1"><i class="fas fa-laptop mr-1"></i> Perangkat Laptop Boss</div>
+                                    <div id="boss-laptop-display" class="font-cinzel text-sm font-semibold text-white">Zyrex D-tech pro V2</div>
+                                </div>
+                            </div>
+
+                            <!-- Boss Status Editor Toggle -->
+                            <div class="pt-2 flex justify-end">
+                                <button onclick="toggleBossEditor()" class="text-xs font-cinzel text-vintage-gold hover:text-white transition-colors flex items-center">
+                                    <i class="fas fa-edit mr-1.5"></i> Perbarui Status Laptop & Tempat Tinggal
+                                </button>
+                            </div>
+
+                            <!-- Hidden Editor Form -->
+                            <div id="boss-editor-form" class="hidden pt-4 border-t border-vintage-gold/20 space-y-3">
+                                <h4 class="font-cinzel text-xs font-bold text-vintage-gold">PANEL KONTROL BOSS (SIMULASI UPDATE)</h4>
+                                <div>
+                                    <label class="block text-xs font-special text-gray-400 mb-1">Tempat Tinggal / Markas Saat Ini:</label>
+                                    <input type="text" id="input-location" value="The islamic boarding school daar el qolam 4. Gintung" class="w-full bg-vintage-dark border border-vintage-gold/40 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-vintage-gold">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-special text-gray-400 mb-1">Perangkat Laptop:</label>
+                                    <input type="text" id="input-laptop" value="Zyrex d-tech pro V2" class="w-full bg-vintage-dark border border-vintage-gold/40 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-vintage-gold">
+                                </div>
+                                <button onclick="saveBossStatus()" class="px-4 py-2 bg-vintage-gold text-black font-cinzel text-xs font-bold rounded hover:bg-vintage-goldlight">
+                                    Simpan Pembaruan Boss
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 50 Projects Syndicate Section -->
+    <section id="projects" class="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <span class="font-special text-vintage-gold text-sm tracking-widest uppercase">The Syndicate Archive</span>
+            <h2 class="font-cinzel text-3xl md:text-5xl font-black text-white mt-2">50 ELITE BUSINESS PROJECTS</h2>
+            <div class="w-24 h-1 bg-vintage-gold mx-auto mt-4"></div>
+            <p class="font-playfair italic text-gray-400 max-w-2xl mx-auto mt-4">
+                Pilih dan saring dari 50 portofolio bisnis dan sindikat operasional Liel Business.
+            </p>
+        </div>
+
+        <!-- Filter Categories -->
+        <div class="flex flex-wrap justify-center gap-2 mb-12">
+            <button onclick="filterProjects('all')" class="project-filter-btn active-filter font-cinzel text-xs px-5 py-2.5 rounded bg-vintage-gold text-black font-bold transition-all shadow">
+                Semua (50)
+            </button>
+            <button onclick="filterProjects('Ekspor')" class="project-filter-btn font-cinzel text-xs px-5 py-2.5 rounded bg-vintage-charcoal border border-vintage-gold/30 text-vintage-gold hover:bg-vintage-gold hover:text-black transition-all">
+                Ekspor & Logistik
+            </button>
+            <button onclick="filterProjects('Hiburan')" class="project-filter-btn font-cinzel text-xs px-5 py-2.5 rounded bg-vintage-charcoal border border-vintage-gold/30 text-vintage-gold hover:bg-vintage-gold hover:text-black transition-all">
+                Pub & Hiburan
+            </button>
+            <button onclick="filterProjects('Keuangan')" class="project-filter-btn font-cinzel text-xs px-5 py-2.5 rounded bg-vintage-charcoal border border-vintage-gold/30 text-vintage-gold hover:bg-vintage-gold hover:text-black transition-all">
+                Keuangan & Bank
+            </button>
+            <button onclick="filterProjects('Industri')" class="project-filter-btn font-cinzel text-xs px-5 py-2.5 rounded bg-vintage-charcoal border border-vintage-gold/30 text-vintage-gold hover:bg-vintage-gold hover:text-black transition-all">
+                Pabrik & Industri
+            </button>
+            <button onclick="filterProjects('Teknologi')" class="project-filter-btn font-cinzel text-xs px-5 py-2.5 rounded bg-vintage-charcoal border border-vintage-gold/30 text-vintage-gold hover:bg-vintage-gold hover:text-black transition-all">
+                Teknologi Rahasia
+            </button>
+        </div>
+
+        <!-- Search Bar for Projects -->
+        <div class="max-w-md mx-auto mb-12">
+            <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-vintage-gold">
+                    <i class="fas fa-search"></i>
+                </span>
+                <input type="text" id="project-search" oninput="searchProjects()" placeholder="Cari sindikat proyek bisnis (misal: Garrison, Ekspor, Bank)..." class="w-full bg-vintage-card border border-vintage-gold/40 rounded-lg pl-10 pr-4 py-3 text-sm text-white focus:outline-none focus:border-vintage-gold shadow-inner">
+            </div>
+        </div>
+
+        <!-- Projects Grid (50 items generated dynamically) -->
+        <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Dynamic JavaScript injection for all 50 projects -->
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-vintage-charcoal/40 border-y border-vintage-gold/20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="font-special text-vintage-gold text-sm tracking-widest uppercase">Associate Voices</span>
+                <h2 class="font-cinzel text-3xl md:text-5xl font-black text-white mt-2">TESTIMONI REKAN BISNIS</h2>
+                <div class="w-24 h-1 bg-vintage-gold mx-auto mt-4"></div>
+                <p class="font-playfair italic text-gray-400 max-w-2xl mx-auto mt-4">
+                    Apa kata para kolega, bangsawan, dan pemimpin sindikat internasional tentang Liel Business Studio.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-vintage-card p-8 rounded-lg border border-vintage-gold/30 relative shadow-xl">
+                    <div class="absolute -top-4 left-8 bg-vintage-gold text-black w-8 h-8 rounded-full flex items-center justify-center font-bold font-cinzel">
+                        <i class="fas fa-quote-left text-sm"></i>
+                    </div>
+                    <p class="font-playfair italic text-gray-300 mb-6 mt-2 leading-relaxed">
+                        "Bekerja sama dengan Liel Business Studio adalah jaminan bahwa transaksi berjalan tanpa celah. Keuntungan berlipat dan keamanan operasional nomor satu di Birmingham."
+                    </p>
+                    <div class="flex items-center space-x-4 border-t border-vintage-gold/20 pt-4">
+                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop" alt="Client" class="w-12 h-12 rounded-full object-cover border border-vintage-gold">
+                        <div>
+                            <h4 class="font-cinzel font-bold text-white text-sm">Arthur Campbell</h4>
+                            <p class="font-special text-xs text-vintage-gold">Direktur Ekspor London</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-vintage-card p-8 rounded-lg border border-vintage-gold/30 relative shadow-xl">
+                    <div class="absolute -top-4 left-8 bg-vintage-gold text-black w-8 h-8 rounded-full flex items-center justify-center font-bold font-cinzel">
+                        <i class="fas fa-quote-left text-sm"></i>
+                    </div>
+                    <p class="font-playfair italic text-gray-300 mb-6 mt-2 leading-relaxed">
+                        "Investasi kami di sektor pelabuhan dikelola dengan perhitungan tingkat dewa oleh Boss Jhon. Tidak ada sindikat lain yang setara dengan kedisiplinan Liel Studio."
+                    </p>
+                    <div class="flex items-center space-x-4 border-t border-vintage-gold/20 pt-4">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop" alt="Client" class="w-12 h-12 rounded-full object-cover border border-vintage-gold">
+                        <div>
+                            <h4 class="font-cinzel font-bold text-white text-sm">Lord Alistair Sterling</h4>
+                            <p class="font-special text-xs text-vintage-gold">Bangsawan & Investor Britania</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-vintage-card p-8 rounded-lg border border-vintage-gold/30 relative shadow-xl">
+                    <div class="absolute -top-4 left-8 bg-vintage-gold text-black w-8 h-8 rounded-full flex items-center justify-center font-bold font-cinzel">
+                        <i class="fas fa-quote-left text-sm"></i>
+                    </div>
+                    <p class="font-playfair italic text-gray-300 mb-6 mt-2 leading-relaxed">
+                        "Pub dan jaringan distribusi kami berkembang 300% sejak bergabung dalam naungan portofolio Liel. Benar-benar standar emas bisnis era 1920."
+                    </p>
+                    <div class="flex items-center space-x-4 border-t border-vintage-gold/20 pt-4">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200&auto=format&fit=crop" alt="Client" class="w-12 h-12 rounded-full object-cover border border-vintage-gold">
+                        <div>
+                            <h4 class="font-cinzel font-bold text-white text-sm">Charles Sabini Jr.</h4>
+                            <p class="font-special text-xs text-vintage-gold">Tokoh Logistik & Hospitality</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Contract Section -->
+    <section id="contact" class="py-24 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-vintage-card border-2 border-vintage-gold p-8 md:p-12 rounded-lg relative shadow-2xl overflow-hidden">
+            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-vintage-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="font-special text-vintage-gold text-sm tracking-widest uppercase">Official Agreement</span>
+                <h2 class="font-cinzel text-3xl md:text-4xl font-black text-white mt-2">AJUKAN KONTRAK BISNIS</h2>
+                <div class="w-20 h-1 bg-vintage-gold mx-auto mt-4"></div>
+                <p class="font-playfair italic text-gray-400 mt-4">
+                    Ingin bermitra dengan 50 sindikat elite Liel Business Studio? Kirimkan surat penawaran Anda di bawah ini.
+                </p>
+            </div>
+
+            <form onsubmit="submitContract(event)" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block font-cinzel text-xs text-vintage-gold uppercase mb-2">Nama / Nama Sindikat:</label>
+                        <input type="text" required placeholder="Contoh: Arthur Shelby" class="w-full bg-vintage-dark border border-vintage-gold/40 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-vintage-gold">
+                    </div>
+                    <div>
+                        <label class="block font-cinzel text-xs text-vintage-gold uppercase mb-2">Kanal Kontak / Surat:</label>
+                        <input type="text" required placeholder="Contoh: garrison@birmingham.co.uk" class="w-full bg-vintage-dark border border-vintage-gold/40 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-vintage-gold">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-cinzel text-xs text-vintage-gold uppercase mb-2">Pilih Sektor Proyek:</label>
+                    <select class="w-full bg-vintage-dark border border-vintage-gold/40 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-vintage-gold">
+                        <option>Ekspor & Logistik Internasional</option>
+                        <option>Pub, Hiburan & Taruhan Resmi</option>
+                        <option>Sindikat Keuangan & Perbankan</option>
+                        <option>Manufaktur Pabrik Baja</option>
+                        <option>Teknologi & Enskripsi Rahasia</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-cinzel text-xs text-vintage-gold uppercase mb-2">Detail Perjanjian Bisnis:</label>
+                    <textarea rows="4" required placeholder="Tuliskan proposal atau pesan kerjasama Anda..." class="w-full bg-vintage-dark border border-vintage-gold/40 rounded px-4 py-3 text-sm text-white focus:outline-none focus:border-vintage-gold"></textarea>
+                </div>
+
+                <div class="text-center pt-4">
+                    <button type="submit" class="font-cinzel px-10 py-4 bg-vintage-gold text-black font-bold text-base rounded shadow-[0_4px_20px_rgba(212,175,55,0.4)] hover:bg-vintage-goldlight transition-all tracking-wider">
+                        KIRIM SURAT KONTRAK
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-vintage-card border-t border-vintage-gold/30 py-12 text-center relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="flex items-center justify-center space-x-3">
+                <div class="w-8 h-8 rounded-full border border-vintage-gold flex items-center justify-center bg-vintage-charcoal text-vintage-gold font-cinzel font-bold">
+                    L
+                </div>
+                <span class="font-cinzel text-lg font-bold text-white tracking-wider">LIEL BUSINESS STUDIO</span>
+            </div>
+            <p class="font-special text-xs text-vintage-gold tracking-widest uppercase">
+                "By Order of the Peaky Blinders — All Rights Reserved © 1920–2026"
+            </p>
+            <div class="flex justify-center space-x-6 text-vintage-gold text-lg">
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fab fa-telegram"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Modal for Alerts / Boss Status Window -->
+    <div id="custom-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-vintage-card border-2 border-vintage-gold max-w-md w-full p-6 rounded-lg relative shadow-2xl text-center">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-vintage-gold hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modal-icon" class="text-4xl text-vintage-gold mb-4">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h3 id="modal-title" class="font-cinzel text-xl font-bold text-white mb-2">Pemberitahuan Studio</h3>
+            <p id="modal-message" class="font-playfair text-gray-300 text-sm mb-6">Pesan sistem...</p>
+            <button onclick="closeModal()" class="font-cinzel px-6 py-2 bg-vintage-gold text-black font-bold text-sm rounded hover:bg-vintage-goldlight">
+                Dimengerti
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Cinematic Intro Function
+        function enterStudio() {
+            const intro = document.getElementById('intro-overlay');
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 1000);
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Boss Status Live Editor Toggle
+        function toggleBossEditor() {
+            const editor = document.getElementById('boss-editor-form');
+            editor.classList.toggle('hidden');
+        }
+
+        function saveBossStatus() {
+            const newLoc = document.getElementById('input-location').value;
+            const newLap = document.getElementById('input-laptop').value;
+            
+            document.getElementById('boss-location-display').innerText = newLoc;
+            document.getElementById('boss-laptop-display').innerText = newLap;
+            
+            document.getElementById('boss-editor-form').classList.add('hidden');
+            showModal('Status Diperbarui', 'Data markas dan laptop Boss Jhon berhasil disinkronkan secara real-time ke seluruh jaringan sindikat.', 'fas fa-check-circle');
+        }
+
+        // Generate 50 Elite Business Syndicate Projects with Unsplash Vintage Images
+        const categories = ['Ekspor', 'Hiburan', 'Keuangan', 'Industri', 'Teknologi'];
+        const vintageImages = [
+            'https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1541872703-74c5e44368f9?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=800&auto=format&fit=crop'
+        ];
+
+        const projectNames = [
+            "Birmingham Steel & Export Co.", "Garrison Pub & Betting Syndicate", "Shelby Import-Export Maritime", 
+            "Small Heath Textile Mill", "London Financial Vaults", "Chesterfield Coal Mining Ltd.", 
+            "Crown Whiskey Distillery", "Peaky Security & Logistics", "Black Country Engineering", 
+            "Waterloo Rail Freight Syndicate", "Merseyside Shipping Dock", "Sheffield Knife & Metalworks", 
+            "Nottingham Textile Syndicate", "Leeds Cotton & Linen Co.", "Manchester Industrial Foundry", 
+            "Glasgow Grain & Spirits", "Edinburgh Vault & Trust", "Cardiff Coal & Iron Co.", 
+            "Belfast Shipbuilding Syndicate", "Dublin Import Bureau", "Bristol Harbor Logistics", 
+            "Newcastle Steel Works", "Leicester Leather & Goods", "Coventry Automotive Foundry", 
+            "Hull Freight & Navigation", "Plymouth Naval Supply", "Southampton Ocean Trading", 
+            "Dover Customs & Transit", "Oxford Academic Press & Archive", "Cambridge Scientific Syndicate", 
+            "Yorkshire Wool & Textile", "Lancashire Cotton Syndicate", "Cornwall Tin Mining Corp.", 
+            "Sussex Agricultural Trust", "Kent Orchard & Cider Co.", "Suffolk Grain & Mill", 
+            "Norfolk Fishery & Export", "Essex Maritime Trading", "Surrey Investment Bureau", 
+            "Berkshire Logistics Hub", "Wiltshire Stone & Quarry", "Dorset Coastal Freight", 
+            "Devon Timber & Forest Co.", "Somerset Cider Syndicate", "Gloucestershire Iron Works", 
+            "Herefordshire Orchard Co.", "Shropshire Metal Foundry", "Staffordshire Pottery & Clay", 
+            "Worcestershire Porcelain Co.", "Liel Ultimate Global Syndicate"
+        ];
+
+        let allProjects = [];
+        for (let i = 0; i < 50; i++) {
+            const cat = categories[i % categories.length];
+            const img = vintageImages[i % vintageImages.length];
+            allProjects.push({
+                id: i + 1,
+                title: projectNames[i],
+                category: cat,
+                image: img,
+                description: `Sindikat elite #` + (i + 1) + ` di bawah naungan Liel Business Studio yang menguasai sektor ${cat.toLowerCase()} dengan standar operasional ketat era 1920.`
+            });
+        }
+
+        function renderProjects(projectsToRender) {
+            const grid = document.getElementById('projects-grid');
+            if (projectsToRender.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 font-playfair italic text-gray-400">Tidak ada proyek sindikat yang ditemukan dengan kata kunci tersebut.</div>`;
+                return;
+            }
+
+            grid.innerHTML = projectsToRender.map(p => `
+                <div class="bg-vintage-card rounded-lg border border-vintage-gold/30 overflow-hidden shadow-xl hover:border-vintage-gold transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter contrast-125 sepia-[0.2]" onerror="this.src='https://placehold.co/600x400/141210/d4af37?text=Liel+Studio+1920'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-vintage-card via-transparent to-transparent"></div>
+                            <span class="absolute top-3 left-3 bg-vintage-dark/80 backdrop-blur-sm text-vintage-gold font-special text-xs px-3 py-1 rounded border border-vintage-gold/40">
+                                #${p.id} • ${p.category}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-cinzel text-xl font-bold text-white mb-2 group-hover:text-vintage-gold transition-colors">${p.title}</h3>
+                            <p class="font-playfair text-gray-300 text-sm leading-relaxed">${p.description}</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6 pt-2 border-t border-vintage-gold/10 flex items-center justify-between">
+                        <span class="font-special text-xs text-vintage-gold"><i class="fas fa-shield-alt mr-1"></i> Verified Syndicate</span>
+                        <button onclick="openProjectDetail('${p.title}', '${p.category}', '${p.description}')" class="font-cinzel text-xs text-vintage-gold hover:text-white underline">
+                            Detail Kontrak &rarr;
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter Function
+        function filterProjects(category) {
+            // Update active button styles
+            const buttons = document.querySelectorAll('.project-filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-vintage-gold', 'text-black', 'font-bold');
+                btn.classList.add('bg-vintage-charcoal', 'text-vintage-gold');
+            });
+            event.target.classList.remove('bg-vintage-charcoal', 'text-vintage-gold');
+            event.target.classList.add('bg-vintage-gold', 'text-black', 'font-bold');
+
+            if (category === 'all') {
+                renderProjects(allProjects);
+            } else {
+                const filtered = allProjects.filter(p => p.category === category);
+                renderProjects(filtered);
+            }
+        }
+
+        // Search Function
+        function searchProjects() {
+            const query = document.getElementById('project-search').value.toLowerCase();
+            const filtered = allProjects.filter(p => 
+                p.title.toLowerCase().includes(query) || 
+                p.category.toLowerCase().includes(query) ||
+                p.description.toLowerCase().includes(query)
+            );
+            renderProjects(filtered);
+        }
+
+        // Modal Controls
+        function showModal(title, message, iconClass = 'fas fa-crown') {
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('modal-icon').innerHTML = `<i class="${iconClass}"></i>`;
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        function openBossModal() {
+            showModal('Status Live Boss Jhon', 'Boss Jhon saat ini berada di The Garrison Manor dengan perangkat IBM-Peaky ThinkPad 1920 terenkripsi, memantau seluruh 50 sindikat.', 'fas fa-laptop-code');
+        }
+
+        function openProjectDetail(title, category, desc) {
+            showModal(title, `${desc}\n\nKategori Sektor: ${category}\nStatus: Operasional penuh di bawah perlindungan mutlak Liel Business Studio.`, 'fas fa-briefcase');
+        }
+
+        function submitContract(e) {
+            e.preventDefault();
+            showModal('Kontrak Berhasil Dikirim', 'Surat perjanjian bisnis Anda telah diterima di meja Boss Jhon. Tim sindikat akan menghubungi Anda segera.', 'fas fa-stamp');
+            e.target.reset();
+        }
+
+        // Initial render on load
+        window.onload = function() {
+            renderProjects(allProjects);
+        };
+    </script>
+</body>
+</html>
